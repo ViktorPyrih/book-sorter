@@ -21,11 +21,7 @@ public class BookSorter {
     }
 
     public <T extends Comparable<T>> List<Book> sort(Function<Book, T> criteria, Direction direction) {
-        var comparator = switch (direction) {
-            case ASC -> Comparator.comparing(criteria);
-            case DESC -> Comparator.comparing(criteria).reversed();
-        };
-
+        var comparator = direction.apply(Comparator.comparing(criteria));
         return this.books.stream()
                 .sorted(comparator)
                 .toList();
